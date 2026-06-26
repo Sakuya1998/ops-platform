@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 vendor/
 .gopath/
@@ -8,10 +8,21 @@ bin/
 dist/
 build/
 *.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 *.tsbuildinfo
 .cache/
 .tmp-gocache/
 .tools/
+
+# Test and coverage artifacts
+*.out
+*.test
+coverage.*
+*.coverprofile
+profile.cov
 
 # IDE
 .idea/
@@ -30,10 +41,6 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
-
-# Go
-*.out
-*.test
 
 # Local brainstorming companion
 .superpowers/
