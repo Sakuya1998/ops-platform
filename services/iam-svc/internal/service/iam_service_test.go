@@ -8,10 +8,10 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/model"
-	"github.com/ops-platform/iam-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
-	"github.com/ops-platform/pkg/config"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
 )
 
 func TestIAMServiceRejectsInvalidUUIDInputs(t *testing.T) {

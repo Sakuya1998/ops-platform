@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/model"
-	"github.com/ops-platform/iam-svc/internal/service"
-	iamv1 "github.com/ops-platform/pkg/proto/iam/v1"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/service"
+	iamv1 "github.com/Sakuya1998/ops-platform/pkg/proto/iam/v1"
 )
 
 type Server struct {

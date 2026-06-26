@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/auth-svc/internal/model"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/pkg/jwt"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/jwt"
 )
 
 type TokenVerifyResult struct {

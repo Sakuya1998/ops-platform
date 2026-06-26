@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	auditv1 "github.com/ops-platform/pkg/proto/audit/v1"
+	auditv1 "github.com/Sakuya1998/ops-platform/pkg/proto/audit/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"

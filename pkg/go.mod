@@ -1,4 +1,4 @@
-module github.com/ops-platform/pkg
+module github.com/Sakuya1998/ops-platform/pkg
 
 go 1.22
 

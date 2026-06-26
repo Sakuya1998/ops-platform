@@ -10,10 +10,10 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
-	"github.com/ops-platform/pkg/config"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 func TestIAMConsumer_UserDeletedClearsRoles(t *testing.T) {

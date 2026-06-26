@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/ops-platform/pkg/config"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

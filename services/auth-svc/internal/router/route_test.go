@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/auth-svc/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/handler"
 )
 
 func TestNewRegistersAuthRoutes(t *testing.T) {

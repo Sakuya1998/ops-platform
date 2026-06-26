@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/ops-platform/auth-svc/internal/model"
-	"github.com/ops-platform/auth-svc/internal/service"
-	authv1 "github.com/ops-platform/pkg/proto/auth/v1"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/service"
+	authv1 "github.com/Sakuya1998/ops-platform/pkg/proto/auth/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

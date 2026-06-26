@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/iam-svc/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/handler"
 )
 
 func TestNewRegistersIAMRoutes(t *testing.T) {

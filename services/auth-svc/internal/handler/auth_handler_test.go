@@ -10,11 +10,11 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/auth-svc/internal/service"
-	"github.com/ops-platform/pkg/cache"
-	sharedcfg "github.com/ops-platform/pkg/config"
-	pkgjwt "github.com/ops-platform/pkg/jwt"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/service"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	sharedcfg "github.com/Sakuya1998/ops-platform/pkg/config"
+	pkgjwt "github.com/Sakuya1998/ops-platform/pkg/jwt"
 )
 
 func TestOIDCStatus_Disabled(t *testing.T) {

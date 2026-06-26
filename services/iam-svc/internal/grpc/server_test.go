@@ -7,10 +7,10 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/repository"
-	"github.com/ops-platform/iam-svc/internal/service"
-	"github.com/ops-platform/pkg/config"
-	iamv1 "github.com/ops-platform/pkg/proto/iam/v1"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/service"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
+	iamv1 "github.com/Sakuya1998/ops-platform/pkg/proto/iam/v1"
 )
 
 func TestServerCheckPermission(t *testing.T) {

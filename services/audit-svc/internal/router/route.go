@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/audit-svc/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/handler"
 )
 
 func New(h *handler.AuditHandler) *gin.Engine {

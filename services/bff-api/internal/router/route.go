@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/bff-api/internal/handler"
-	"github.com/ops-platform/bff-api/internal/middleware"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/middleware"
 )
 
 type Dependencies struct {

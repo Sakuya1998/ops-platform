@@ -17,11 +17,11 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"github.com/ops-platform/auth-svc/internal/config"
-	"github.com/ops-platform/auth-svc/internal/model"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
-	secretcrypto "github.com/ops-platform/pkg/crypto"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/config"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	secretcrypto "github.com/Sakuya1998/ops-platform/pkg/crypto"
 )
 
 type OIDCDiscovery struct {

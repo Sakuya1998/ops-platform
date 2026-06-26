@@ -7,8 +7,8 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	"github.com/ops-platform/audit-svc/internal/repository"
-	auditv1 "github.com/ops-platform/pkg/proto/audit/v1"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/repository"
+	auditv1 "github.com/Sakuya1998/ops-platform/pkg/proto/audit/v1"
 )
 
 func TestServerListAuditLogs(t *testing.T) {

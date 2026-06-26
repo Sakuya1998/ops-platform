@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/notify-svc/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/handler"
 )
 
 func TestNewRegistersNotifyRoutes(t *testing.T) {

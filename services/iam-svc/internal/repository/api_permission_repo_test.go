@@ -6,7 +6,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/model"
 )
 
 func TestAPIPermissionRepositoryFindEnabledByRoute(t *testing.T) {

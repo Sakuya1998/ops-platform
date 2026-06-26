@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 type eventPublisher interface {

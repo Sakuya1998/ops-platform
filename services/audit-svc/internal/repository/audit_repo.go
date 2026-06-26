@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"github.com/ops-platform/audit-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/model"
 	"gorm.io/gorm"
 )
 

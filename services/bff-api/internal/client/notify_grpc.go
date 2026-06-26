@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	notifyv1 "github.com/ops-platform/pkg/proto/notify/v1"
+	notifyv1 "github.com/Sakuya1998/ops-platform/pkg/proto/notify/v1"
 	"google.golang.org/grpc"
 )
 

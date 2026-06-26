@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/auth-svc/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/handler"
 )
 
 func New(h *handler.AuthHandler) *gin.Engine {

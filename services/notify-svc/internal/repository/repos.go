@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/notify-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/model"
 	"gorm.io/gorm"
 )
 

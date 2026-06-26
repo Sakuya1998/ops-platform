@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package iam.v1;
 
-option go_package = "github.com/ops-platform/pkg/proto/iam/v1;iamv1";
+option go_package = "github.com/Sakuya1998/ops-platform/pkg/proto/iam/v1;iamv1";
 
 import "google/protobuf/timestamp.proto";
 

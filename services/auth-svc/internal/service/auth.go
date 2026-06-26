@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/auth-svc/internal/model"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	sharedconfig "github.com/ops-platform/pkg/config"
-	secretcrypto "github.com/ops-platform/pkg/crypto"
-	"github.com/ops-platform/pkg/jwt"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	sharedconfig "github.com/Sakuya1998/ops-platform/pkg/config"
+	secretcrypto "github.com/Sakuya1998/ops-platform/pkg/crypto"
+	"github.com/Sakuya1998/ops-platform/pkg/jwt"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 	"golang.org/x/crypto/bcrypt"
 )
 

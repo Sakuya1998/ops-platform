@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/iam-svc/internal/service"
-	"github.com/ops-platform/pkg/response"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/service"
+	"github.com/Sakuya1998/ops-platform/pkg/response"
 )
 
 type IAMHandler struct{ svc *service.IAMService }

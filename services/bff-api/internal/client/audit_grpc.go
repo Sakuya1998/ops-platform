@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	auditv1 "github.com/ops-platform/pkg/proto/audit/v1"
+	auditv1 "github.com/Sakuya1998/ops-platform/pkg/proto/audit/v1"
 	"google.golang.org/grpc"
 )
 

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 func TestAuditLogFromEventMapsSecurityContext(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/bff-api/internal/client"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/client"
 )
 
 type fakeTokenVerifier struct {

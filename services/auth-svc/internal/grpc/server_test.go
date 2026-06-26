@@ -7,13 +7,13 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	authconfig "github.com/ops-platform/auth-svc/internal/config"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/auth-svc/internal/service"
-	"github.com/ops-platform/pkg/config"
-	secretcrypto "github.com/ops-platform/pkg/crypto"
-	sharedjwt "github.com/ops-platform/pkg/jwt"
-	authv1 "github.com/ops-platform/pkg/proto/auth/v1"
+	authconfig "github.com/Sakuya1998/ops-platform/services/auth-svc/internal/config"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/service"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
+	secretcrypto "github.com/Sakuya1998/ops-platform/pkg/crypto"
+	sharedjwt "github.com/Sakuya1998/ops-platform/pkg/jwt"
+	authv1 "github.com/Sakuya1998/ops-platform/pkg/proto/auth/v1"
 	"gorm.io/gorm"
 )
 

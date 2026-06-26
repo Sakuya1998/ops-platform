@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ops-platform/pkg/config"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
 )
 
 type Config struct {

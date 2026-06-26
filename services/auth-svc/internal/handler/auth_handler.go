@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/auth-svc/internal/service"
-	"github.com/ops-platform/pkg/response"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/service"
+	"github.com/Sakuya1998/ops-platform/pkg/response"
 )
 
 type AuthHandler struct {

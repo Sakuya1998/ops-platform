@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ops-platform/bff-api/internal/client"
-	"github.com/ops-platform/bff-api/internal/handler"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/client"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/handler"
 )
 
 func TestIAMOwnedRoutesUseExplicitHandlers(t *testing.T) {

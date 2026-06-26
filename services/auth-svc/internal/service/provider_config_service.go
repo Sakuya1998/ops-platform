@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	authconfig "github.com/ops-platform/auth-svc/internal/config"
+	authconfig "github.com/Sakuya1998/ops-platform/services/auth-svc/internal/config"
 )
 
 type SystemConfig struct {

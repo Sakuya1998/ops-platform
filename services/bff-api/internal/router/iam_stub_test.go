@@ -3,7 +3,7 @@ package router
 import (
 	"context"
 
-	"github.com/ops-platform/bff-api/internal/client"
+	"github.com/Sakuya1998/ops-platform/services/bff-api/internal/client"
 )
 
 type recordingIAMRouterService struct {

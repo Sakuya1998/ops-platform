@@ -1,6 +1,6 @@
 package config
 
-import "github.com/ops-platform/pkg/config"
+import "github.com/Sakuya1998/ops-platform/pkg/config"
 
 type Config struct {
 	Server   config.ServerConfig   `mapstructure:"server"`

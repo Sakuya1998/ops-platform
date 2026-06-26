@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/model"
 	"gorm.io/gorm"
 )
 

@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	iamv1 "github.com/ops-platform/pkg/proto/iam/v1"
+	iamv1 "github.com/Sakuya1998/ops-platform/pkg/proto/iam/v1"
 	"google.golang.org/grpc"
 )
 

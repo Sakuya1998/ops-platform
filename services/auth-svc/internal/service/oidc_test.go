@@ -12,9 +12,9 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	authconfig "github.com/ops-platform/auth-svc/internal/config"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
+	authconfig "github.com/Sakuya1998/ops-platform/services/auth-svc/internal/config"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
 )
 
 func TestOIDCStateCacheConsumeOnce(t *testing.T) {

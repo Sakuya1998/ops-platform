@@ -11,9 +11,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/ops-platform/notify-svc/internal/model"
-	"github.com/ops-platform/notify-svc/internal/repository"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 type NotifyService struct {

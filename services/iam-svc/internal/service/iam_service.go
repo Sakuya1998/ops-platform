@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/model"
-	"github.com/ops-platform/iam-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
-	"github.com/ops-platform/pkg/config"
-	pkgjwt "github.com/ops-platform/pkg/jwt"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	"github.com/Sakuya1998/ops-platform/pkg/config"
+	pkgjwt "github.com/Sakuya1998/ops-platform/pkg/jwt"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 	"gorm.io/gorm"
 )
 

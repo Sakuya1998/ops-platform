@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package audit.v1;
 
-option go_package = "github.com/ops-platform/pkg/proto/audit/v1;auditv1";
+option go_package = "github.com/Sakuya1998/ops-platform/pkg/proto/audit/v1;auditv1";
 
 import "google/protobuf/timestamp.proto";
 

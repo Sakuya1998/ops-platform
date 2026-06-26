@@ -14,12 +14,12 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"
-	authconfig "github.com/ops-platform/auth-svc/internal/config"
-	"github.com/ops-platform/auth-svc/internal/repository"
-	"github.com/ops-platform/pkg/cache"
-	sharedcfg "github.com/ops-platform/pkg/config"
-	secretcrypto "github.com/ops-platform/pkg/crypto"
-	"github.com/ops-platform/pkg/kafka"
+	authconfig "github.com/Sakuya1998/ops-platform/services/auth-svc/internal/config"
+	"github.com/Sakuya1998/ops-platform/services/auth-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
+	sharedcfg "github.com/Sakuya1998/ops-platform/pkg/config"
+	secretcrypto "github.com/Sakuya1998/ops-platform/pkg/crypto"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

@@ -6,8 +6,8 @@ import (
 	"log"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/iam-svc/internal/repository"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/iam-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 type IAMConsumer struct {

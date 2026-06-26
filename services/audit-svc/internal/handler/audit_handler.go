@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ops-platform/audit-svc/internal/repository"
-	"github.com/ops-platform/pkg/response"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/response"
 	"strconv"
 )
 

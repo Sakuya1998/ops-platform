@@ -3,7 +3,7 @@ package config
 import (
 	"os"
 
-	sharedconfig "github.com/ops-platform/pkg/config"
+	sharedconfig "github.com/Sakuya1998/ops-platform/pkg/config"
 )
 
 type Config struct {

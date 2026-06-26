@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ops-platform/pkg/cache"
+	"github.com/Sakuya1998/ops-platform/pkg/cache"
 )
 
 func TestLoginLimiterBlocksAfterLimit(t *testing.T) {

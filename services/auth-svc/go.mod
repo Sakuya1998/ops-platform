@@ -1,4 +1,4 @@
-module github.com/ops-platform/auth-svc
+module github.com/Sakuya1998/ops-platform/services/auth-svc
 
 go 1.22
 
@@ -7,7 +7,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/consul/api v1.28.2 // indirect
-	github.com/ops-platform/pkg v0.0.0
+	github.com/Sakuya1998/ops-platform/pkg v0.0.0
 	github.com/segmentio/kafka-go v0.4.47 // indirect
 	github.com/spf13/viper v1.19.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
@@ -87,4 +87,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/ops-platform/pkg => ../../pkg
+replace github.com/Sakuya1998/ops-platform/pkg => ../../pkg

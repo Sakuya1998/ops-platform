@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	authv1 "github.com/ops-platform/pkg/proto/auth/v1"
+	authv1 "github.com/Sakuya1998/ops-platform/pkg/proto/auth/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

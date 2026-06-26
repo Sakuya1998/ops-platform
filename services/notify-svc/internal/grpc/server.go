@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/notify-svc/internal/model"
-	"github.com/ops-platform/notify-svc/internal/repository"
-	"github.com/ops-platform/notify-svc/internal/service"
-	notifyv1 "github.com/ops-platform/pkg/proto/notify/v1"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/services/notify-svc/internal/service"
+	notifyv1 "github.com/Sakuya1998/ops-platform/pkg/proto/notify/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ops-platform/audit-svc/internal/model"
-	"github.com/ops-platform/audit-svc/internal/repository"
-	"github.com/ops-platform/pkg/kafka"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/model"
+	"github.com/Sakuya1998/ops-platform/services/audit-svc/internal/repository"
+	"github.com/Sakuya1998/ops-platform/pkg/kafka"
 )
 
 type AuditConsumer struct {
