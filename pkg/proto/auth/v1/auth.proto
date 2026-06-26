@@ -1,0 +1,361 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/ops-platform/pkg/proto/auth/v1;authv1";
+
+import "google/protobuf/timestamp.proto";
+
+message Empty {}
+
+message UserInfo {
+  string user_id = 1;
+  string org_id = 2;
+  string username = 3;
+  string display_name = 4;
+  string email = 5;
+  repeated string roles = 6;
+  bool must_change_password = 7;
+  bool mfa_enabled = 8;
+}
+
+message User {
+  string id = 1;
+  string org_id = 2;
+  string username = 3;
+  string email = 4;
+  string phone = 5;
+  string display_name = 6;
+  string avatar = 7;
+  string status = 8;
+  string source = 9;
+  int32 failed_login_attempts = 10;
+  google.protobuf.Timestamp locked_until = 11;
+  google.protobuf.Timestamp password_changed_at = 12;
+  bool must_change_password = 13;
+  bool mfa_enabled = 14;
+  google.protobuf.Timestamp mfa_confirmed_at = 15;
+  google.protobuf.Timestamp last_login_at = 16;
+  google.protobuf.Timestamp deleted_at = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2;
+  string code = 3;
+  string description = 4;
+  string logo = 5;
+  string status = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message Session {
+  string id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string status = 4;
+  string ip = 5;
+  string user_agent = 6;
+  string device_name = 7;
+  google.protobuf.Timestamp last_seen_at = 8;
+  google.protobuf.Timestamp expires_at = 9;
+  google.protobuf.Timestamp revoked_at = 10;
+  string revoked_reason = 11;
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
+}
+
+message AuthProvider {
+  string id = 1;
+  string org_id = 2;
+  string provider = 3;
+  string name = 4;
+  string config_json = 5;
+  bool is_enabled = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message PasswordPolicy {
+  int32 min_length = 1;
+  bool require_uppercase = 2;
+  bool require_lowercase = 3;
+  bool require_number = 4;
+  bool require_symbol = 5;
+  int32 history_limit = 6;
+}
+
+message LoginSecurityConfig {
+  int32 max_failed_attempts = 1;
+  int32 lock_minutes = 2;
+  bool mfa_required = 3;
+}
+
+message SystemConfig {
+  repeated AuthProvider providers = 1;
+  PasswordPolicy password_policy = 2;
+  LoginSecurityConfig login_security = 3;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+  string org_code = 3;
+  string provider = 4;
+  string mfa_code = 5;
+  string ip = 6;
+  string user_agent = 7;
+  string device_name = 8;
+  string request_id = 9;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 expires_in = 3;
+  string token_type = 4;
+  string session_id = 5;
+  string jti = 6;
+  UserInfo user = 7;
+}
+
+message LogoutRequest {
+  string user_id = 1;
+  string refresh_token = 2;
+  string access_token = 3;
+}
+
+message LogoutResponse {}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 expires_in = 3;
+  string token_type = 4;
+  string session_id = 5;
+  string jti = 6;
+  UserInfo user = 7;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string username = 4;
+  repeated string roles = 5;
+  int64 expires_at = 6;
+  string session_id = 7;
+  string jti = 8;
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string username = 4;
+  repeated string roles = 5;
+  int64 expires_at = 6;
+  string session_id = 7;
+  string jti = 8;
+}
+
+message GetCurrentUserRequest {
+  string user_id = 1;
+}
+
+message ChangePasswordRequest {
+  string user_id = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+message MFASetupRequest {
+  string user_id = 1;
+}
+
+message MFASetupResponse {
+  string secret = 1;
+  string otpauth_url = 2;
+  repeated string recovery_codes = 3;
+}
+
+message ConfirmMFARequest {
+  string user_id = 1;
+  string code = 2;
+}
+
+message ConfirmMFAResponse {
+  repeated string recovery_codes = 1;
+}
+
+message DisableMFARequest {
+  string user_id = 1;
+  string code = 2;
+}
+
+message RegenerateMFARecoveryCodesRequest {
+  string user_id = 1;
+  string code = 2;
+}
+
+message RegenerateMFARecoveryCodesResponse {
+  repeated string recovery_codes = 1;
+}
+
+message ListSessionsRequest {
+  string user_id = 1;
+}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message RevokeSessionRequest {
+  string user_id = 1;
+  string session_id = 2;
+  string reason = 3;
+}
+
+message RevokeOtherSessionsRequest {
+  string user_id = 1;
+  string current_session_id = 2;
+}
+
+message OIDCStatusRequest {}
+
+message OIDCStatusResponse {
+  bool enabled = 1;
+  string provider_name = 2;
+  string login_url = 3;
+}
+
+message OIDCExchangeRequest {
+  string code = 1;
+}
+
+message ListUsersRequest {
+  string org_id = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+  string keyword = 4;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  int64 total = 2;
+}
+
+message CreateUserRequest {
+  string org_id = 1;
+  string username = 2;
+  string email = 3;
+  string phone = 4;
+  string display_name = 5;
+  string password = 6;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string email = 2;
+  string phone = 3;
+  string display_name = 4;
+}
+
+message UpdateUserStatusRequest {
+  string id = 1;
+  string status = 2;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message ResetUserPasswordRequest {
+  string id = 1;
+  string new_password = 2;
+  bool must_change_password = 3;
+}
+
+message ListOrganizationsRequest {}
+
+message ListOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message CreateOrganizationRequest {
+  string name = 1;
+  string code = 2;
+  string description = 3;
+}
+
+message UpdateOrganizationRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message GetSystemConfigRequest {
+  string org_id = 1;
+}
+
+message UpdateSystemConfigRequest {
+  string org_id = 1;
+  SystemConfig config = 2;
+}
+
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+
+  rpc GetCurrentUser(GetCurrentUserRequest) returns (User);
+  rpc ChangePassword(ChangePasswordRequest) returns (Empty);
+
+  rpc SetupMFA(MFASetupRequest) returns (MFASetupResponse);
+  rpc ConfirmMFA(ConfirmMFARequest) returns (ConfirmMFAResponse);
+  rpc DisableMFA(DisableMFARequest) returns (Empty);
+  rpc RegenerateMFARecoveryCodes(RegenerateMFARecoveryCodesRequest) returns (RegenerateMFARecoveryCodesResponse);
+
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  rpc RevokeSession(RevokeSessionRequest) returns (Empty);
+  rpc RevokeOtherSessions(RevokeOtherSessionsRequest) returns (Empty);
+
+  rpc OIDCStatus(OIDCStatusRequest) returns (OIDCStatusResponse);
+  rpc OIDCExchange(OIDCExchangeRequest) returns (LoginResponse);
+
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc CreateUser(CreateUserRequest) returns (User);
+  rpc GetUser(GetUserRequest) returns (User);
+  rpc UpdateUser(UpdateUserRequest) returns (User);
+  rpc UpdateUserStatus(UpdateUserStatusRequest) returns (User);
+  rpc DeleteUser(DeleteUserRequest) returns (Empty);
+  rpc ResetUserPassword(ResetUserPasswordRequest) returns (User);
+
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse);
+  rpc CreateOrganization(CreateOrganizationRequest) returns (Organization);
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (Organization);
+
+  rpc GetSystemConfig(GetSystemConfigRequest) returns (SystemConfig);
+  rpc UpdateSystemConfig(UpdateSystemConfigRequest) returns (Empty);
+}

@@ -1,0 +1,39 @@
+﻿# Dependencies
+node_modules/
+vendor/
+.gopath/
+
+# Build output
+bin/
+dist/
+build/
+*.exe
+*.tsbuildinfo
+.cache/
+.tmp-gocache/
+.tools/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Go
+*.out
+*.test
+
+# Local brainstorming companion
+.superpowers/

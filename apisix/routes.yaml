@@ -1,0 +1,158 @@
+routes:
+  # ============ BFF (Target Client API Entry) ============
+  - uri: /api/v1/bootstrap
+    name: bff-bootstrap
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 60
+        burst: 100
+
+  # ============ Auth (Public) ============
+  - uri: /api/v1/auth/login
+    name: auth-login
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 10
+        burst: 20
+
+  - uri: /api/v1/auth/refresh
+    name: auth-refresh
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 30
+        burst: 50
+
+  - uri: /api/v1/auth/token/verify
+    name: auth-token-verify
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 60
+        burst: 100
+
+  - uri: /api/v1/auth/oidc/login
+    name: auth-oidc-login
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 30
+        burst: 50
+
+  - uri: /api/v1/auth/oidc/callback
+    name: auth-oidc-callback
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 30
+        burst: 50
+
+  - uri: /api/v1/auth/oidc/status
+    name: auth-oidc-status
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 60
+        burst: 100
+
+  - uri: /api/v1/auth/oidc/exchange
+    name: auth-oidc-exchange
+    upstream_id: bff-api
+    plugins:
+      limit-req:
+        rate: 30
+        burst: 50
+
+  # ============ Auth (Protected) ============
+  - uri: /api/v1/auth/me
+    name: auth-me
+    upstream_id: bff-api
+
+  - uri: /api/v1/auth/logout
+    name: auth-logout
+    upstream_id: bff-api
+
+  - uri: /api/v1/auth/me/password
+    name: auth-change-password
+    upstream_id: bff-api
+
+  - uri: /api/v1/auth/me/mfa*
+    name: auth-mfa
+    upstream_id: bff-api
+
+  - uri: /api/v1/auth/sessions*
+    name: auth-sessions
+    upstream_id: bff-api
+
+  # ============ IAM ============
+  - uri: /api/v1/users/*/roles
+    name: iam-user-roles
+    upstream_id: bff-api
+
+  - uri: /api/v1/users*
+    name: auth-users
+    upstream_id: bff-api
+
+  - uri: /api/v1/roles*
+    name: iam-roles
+    upstream_id: bff-api
+
+  - uri: /api/v1/permissions*
+    name: iam-permissions
+    upstream_id: bff-api
+
+  - uri: /api/v1/api-permissions*
+    name: iam-api-permissions
+    upstream_id: bff-api
+
+  - uri: /api/v1/organizations*
+    name: auth-organizations
+    upstream_id: bff-api
+
+  # ============ Audit ============
+  - uri: /api/v1/audit-logs*
+    name: audit-logs
+    upstream_id: bff-api
+
+  # ============ Notify ============
+  - uri: /api/v1/notifications*
+    name: notify-channels
+    upstream_id: bff-api
+
+  - uri: /api/v1/notify/templates*
+    name: notify-templates
+    upstream_id: bff-api
+
+  - uri: /api/v1/notify/logs*
+    name: notify-logs
+    upstream_id: bff-api
+
+  # ============ System Config ============
+  - uri: /api/v1/system/config*
+    name: system-config
+    upstream_id: bff-api
+
+  # ============ Health ============
+  - uri: /health
+    name: health-check
+    upstream_id: bff-api
+    plugins:
+      public-api: {}
+
+  - uri: /health/*
+    name: health-check-all
+    upstream_id: bff-api
+    plugins:
+      public-api: {}
+
+upstreams:
+  - id: bff-api
+    service_name: bff-api
+    discovery_type: consul
+    type: roundrobin
+    scheme: http
+
+#END
+

@@ -1,0 +1,10 @@
+go 1.22
+
+use (
+	./pkg
+	./services/bff-api
+	./services/auth-svc
+	./services/iam-svc
+	./services/audit-svc
+	./services/notify-svc
+)

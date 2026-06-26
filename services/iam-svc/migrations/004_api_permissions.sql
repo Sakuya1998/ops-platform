@@ -1,0 +1,67 @@
+CREATE TABLE IF NOT EXISTS api_permissions (
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    method          VARCHAR(16) NOT NULL,
+    path_pattern    VARCHAR(255) NOT NULL,
+    permission_code VARCHAR(100) NOT NULL REFERENCES permissions(code),
+    description     VARCHAR(500),
+    enabled         BOOLEAN DEFAULT true,
+    created_at      TIMESTAMPTZ DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(method, path_pattern)
+);
+
+CREATE INDEX IF NOT EXISTS idx_api_permissions_route ON api_permissions(method, path_pattern, enabled);
+CREATE INDEX IF NOT EXISTS idx_api_permissions_permission_code ON api_permissions(permission_code);
+
+INSERT INTO api_permissions (method, path_pattern, permission_code, description, enabled)
+VALUES
+  ('GET', '/api/v1/auth/me', 'user:read', 'Read current user profile', true),
+  ('POST', '/api/v1/auth/logout', 'user:read', 'Logout current user', true),
+  ('PUT', '/api/v1/auth/me/password', 'user:update', 'Update current user password', true),
+  ('POST', '/api/v1/auth/me/mfa/setup', 'user:update', 'Setup current user MFA', true),
+  ('POST', '/api/v1/auth/me/mfa/confirm', 'user:update', 'Confirm current user MFA', true),
+  ('POST', '/api/v1/auth/me/mfa/recovery-codes', 'user:update', 'Regenerate current user MFA recovery codes', true),
+  ('DELETE', '/api/v1/auth/me/mfa', 'user:update', 'Disable current user MFA', true),
+  ('GET', '/api/v1/auth/sessions', 'user:read', 'List current user sessions', true),
+  ('DELETE', '/api/v1/auth/sessions', 'user:update', 'Revoke current user sessions', true),
+  ('DELETE', '/api/v1/auth/sessions/:id', 'user:update', 'Revoke a current user session', true),
+  ('POST', '/api/v1/users', 'user:create', 'Create user', true),
+  ('GET', '/api/v1/users', 'user:read', 'List users', true),
+  ('GET', '/api/v1/users/:id', 'user:read', 'Read user detail', true),
+  ('PUT', '/api/v1/users/:id', 'user:update', 'Update user', true),
+  ('PUT', '/api/v1/users/:id/status', 'user:update', 'Update user status', true),
+  ('PUT', '/api/v1/users/:id/password/reset', 'user:update', 'Reset user password', true),
+  ('PUT', '/api/v1/users/:id/roles', 'role:assign', 'Assign user roles', true),
+  ('GET', '/api/v1/users/:id/roles', 'role:read', 'Read user roles', true),
+  ('DELETE', '/api/v1/users/:id', 'user:delete', 'Delete user', true),
+  ('POST', '/api/v1/roles', 'role:create', 'Create role', true),
+  ('GET', '/api/v1/roles', 'role:read', 'List roles', true),
+  ('GET', '/api/v1/roles/:id', 'role:read', 'Read role detail', true),
+  ('PUT', '/api/v1/roles/:id', 'role:update', 'Update role', true),
+  ('DELETE', '/api/v1/roles/:id', 'role:delete', 'Delete role', true),
+  ('PUT', '/api/v1/roles/:id/permissions', 'role:assign', 'Assign role permissions', true),
+  ('GET', '/api/v1/permissions', 'permission:read', 'Read permission tree', true),
+  ('GET', '/api/v1/api-permissions', 'api_permission:read', 'List API permission mappings', true),
+  ('POST', '/api/v1/api-permissions', 'api_permission:create', 'Create API permission mapping', true),
+  ('PUT', '/api/v1/api-permissions/:id', 'api_permission:update', 'Update API permission mapping', true),
+  ('DELETE', '/api/v1/api-permissions/:id', 'api_permission:delete', 'Delete API permission mapping', true),
+  ('POST', '/api/v1/organizations', 'org:create', 'Create organization', true),
+  ('GET', '/api/v1/organizations', 'org:read', 'List organizations', true),
+  ('PUT', '/api/v1/organizations/:id', 'org:update', 'Update organization', true),
+  ('GET', '/api/v1/audit-logs', 'audit:read', 'List audit logs', true),
+  ('GET', '/api/v1/audit-logs/event-types', 'audit:read', 'List audit event types', true),
+  ('GET', '/api/v1/notifications', 'notify:read', 'List notifications', true),
+  ('POST', '/api/v1/notifications', 'notify:create', 'Create notification', true),
+  ('PUT', '/api/v1/notifications/:id', 'notify:update', 'Update notification', true),
+  ('DELETE', '/api/v1/notifications/:id', 'notify:delete', 'Delete notification', true),
+  ('GET', '/api/v1/notify/templates', 'notify:read', 'List notification templates', true),
+  ('POST', '/api/v1/notify/templates', 'notify:create', 'Create notification template', true),
+  ('PUT', '/api/v1/notify/templates/:id', 'notify:update', 'Update notification template', true),
+  ('DELETE', '/api/v1/notify/templates/:id', 'notify:delete', 'Delete notification template', true),
+  ('GET', '/api/v1/notify/logs', 'notify:read', 'List notification logs', true),
+  ('GET', '/api/v1/system/config', 'org:read', 'Read system config', true)
+ON CONFLICT (method, path_pattern) DO UPDATE SET
+  permission_code = EXCLUDED.permission_code,
+  description = EXCLUDED.description,
+  enabled = EXCLUDED.enabled,
+  updated_at = NOW();

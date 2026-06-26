@@ -1,0 +1,252 @@
+version: "3.8"
+
+name: ops-platform
+
+services:
+  # ============ APISIX Gateway ============
+  etcd:
+    image: bitnami/etcd:3.5
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379"
+    volumes:
+      - etcd_data:/bitnami/etcd
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl endpoint health --endpoints=http://127.0.0.1:2379 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  apisix:
+    build: ../apisix
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    depends_on:
+      consul: { condition: service_healthy }
+      bff-api: { condition: service_healthy }
+    volumes:
+      - ../apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ../apisix/routes.yaml:/usr/local/apisix/conf/apisix.yaml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:9080/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # ============ Infrastructure ============
+  consul:
+    image: consul:1.16
+    ports:
+      - "8500:8500"
+    command: agent -server -bootstrap -ui -client=0.0.0.0
+    healthcheck:
+      test: ["CMD-SHELL", "consul info >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: opsadmin
+      POSTGRES_PASSWORD: ops@2026
+      POSTGRES_DB: ops_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U opsadmin -d ops_platform >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  kafka:
+    image: bitnami/kafka:3.6
+    environment:
+      KAFKA_CFG_NODE_ID: "0"
+      KAFKA_CFG_PROCESS_ROLES: "controller,broker"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: "0@kafka:9093"
+      KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,CONTROLLER://:9093"
+      KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --list >/dev/null 2>&1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+
+  # ============ Microservices ============
+  bff-api:
+    build:
+      context: ..
+      dockerfile: services/bff-api/Dockerfile
+    expose:
+      - "8070"
+    environment:
+      OPS_SERVICE_ADDRESS: bff-api
+      OPS_CONSUL_ADDR: consul:8500
+      OPS_AUTH_BASE_URL: http://auth-svc:8080
+      OPS_IAM_BASE_URL: http://iam-svc:8081
+      OPS_AUDIT_BASE_URL: http://audit-svc:8082
+      OPS_NOTIFY_BASE_URL: http://notify-svc:8083
+      OPS_AUTH_GRPC_ADDR: auth-svc:9080
+      OPS_IAM_GRPC_ADDR: iam-svc:9081
+      OPS_AUDIT_GRPC_ADDR: audit-svc:9082
+      OPS_NOTIFY_GRPC_ADDR: notify-svc:9083
+    depends_on:
+      auth-svc: { condition: service_healthy }
+      iam-svc: { condition: service_healthy }
+      audit-svc: { condition: service_healthy }
+      notify-svc: { condition: service_healthy }
+      consul: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8070/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  auth-svc:
+    build:
+      context: ..
+      dockerfile: services/auth-svc/Dockerfile
+    expose:
+      - "8080"
+      - "9080"
+    environment:
+      OPS_SERVICE_ADDRESS: auth-svc
+      OPS_DB_HOST: postgres
+      OPS_DB_PORT: "5432"
+      OPS_DB_USER: opsadmin
+      OPS_DB_PASSWORD: ops@2026
+      OPS_DB_NAME: auth_svc
+      OPS_REDIS_ADDR: redis:6379
+      OPS_KAFKA_BROKERS: kafka:9092
+      OPS_CONSUL_ADDR: consul:8500
+      OPS_JWT_SECRET: ops-platform-jwt-secret-2026
+      OPS_IAM_BASE_URL: http://iam-svc:8081
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      kafka: { condition: service_healthy }
+      consul: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  iam-svc:
+    build:
+      context: ..
+      dockerfile: services/iam-svc/Dockerfile
+    expose:
+      - "8081"
+      - "9081"
+    environment:
+      OPS_SERVICE_ADDRESS: iam-svc
+      OPS_DB_HOST: postgres
+      OPS_DB_PORT: "5432"
+      OPS_DB_USER: opsadmin
+      OPS_DB_PASSWORD: ops@2026
+      OPS_DB_NAME: iam_svc
+      OPS_KAFKA_BROKERS: kafka:9092
+      OPS_CONSUL_ADDR: consul:8500
+      OPS_JWT_SECRET: ops-platform-jwt-secret-2026
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      kafka: { condition: service_healthy }
+      consul: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8081/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  audit-svc:
+    build:
+      context: ..
+      dockerfile: services/audit-svc/Dockerfile
+    expose:
+      - "8082"
+      - "9082"
+    environment:
+      OPS_SERVICE_ADDRESS: audit-svc
+      OPS_DB_HOST: postgres
+      OPS_DB_PORT: "5432"
+      OPS_DB_USER: opsadmin
+      OPS_DB_PASSWORD: ops@2026
+      OPS_DB_NAME: audit_svc
+      OPS_KAFKA_BROKERS: kafka:9092
+      OPS_CONSUL_ADDR: consul:8500
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka: { condition: service_healthy }
+      consul: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8082/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  notify-svc:
+    build:
+      context: ..
+      dockerfile: services/notify-svc/Dockerfile
+    expose:
+      - "8083"
+      - "9083"
+    environment:
+      OPS_SERVICE_ADDRESS: notify-svc
+      OPS_DB_HOST: postgres
+      OPS_DB_PORT: "5432"
+      OPS_DB_USER: opsadmin
+      OPS_DB_PASSWORD: ops@2026
+      OPS_DB_NAME: notify_svc
+      OPS_KAFKA_BROKERS: kafka:9092
+      OPS_CONSUL_ADDR: consul:8500
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka: { condition: service_healthy }
+      consul: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8083/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # ============ Frontend ============
+  web:
+    build: ../web
+    ports:
+      - "3000:80"
+    depends_on:
+      apisix: { condition: service_healthy }
+      bff-api: { condition: service_healthy }
+
+volumes:
+  etcd_data:
+  pg_data:
+  redis_data:
+  kafka_data:

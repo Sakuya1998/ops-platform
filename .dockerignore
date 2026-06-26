@@ -1,0 +1,16 @@
+.git
+.agents
+.codex
+.cache
+.tmp-gocache
+.gopath
+.tools
+
+**/node_modules
+**/dist
+**/build
+**/.vite
+
+*.log
+tmp
+temp

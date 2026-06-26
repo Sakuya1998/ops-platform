@@ -1,0 +1,30 @@
+INSERT INTO permissions (name, code, resource, action, type, sort)
+VALUES
+  ('Create User', 'user:create', 'user', 'create', 'api', 100),
+  ('Read User', 'user:read', 'user', 'read', 'api', 101),
+  ('Update User', 'user:update', 'user', 'update', 'api', 102),
+  ('Delete User', 'user:delete', 'user', 'delete', 'api', 103),
+  ('Create Role', 'role:create', 'role', 'create', 'api', 200),
+  ('Read Role', 'role:read', 'role', 'read', 'api', 201),
+  ('Update Role', 'role:update', 'role', 'update', 'api', 202),
+  ('Delete Role', 'role:delete', 'role', 'delete', 'api', 203),
+  ('Assign Role', 'role:assign', 'role', 'assign', 'api', 204),
+  ('Read Permission', 'permission:read', 'permission', 'read', 'api', 300),
+  ('Create API Permission', 'api_permission:create', 'api_permission', 'create', 'api', 350),
+  ('Read API Permission', 'api_permission:read', 'api_permission', 'read', 'api', 351),
+  ('Update API Permission', 'api_permission:update', 'api_permission', 'update', 'api', 352),
+  ('Delete API Permission', 'api_permission:delete', 'api_permission', 'delete', 'api', 353),
+  ('Create Organization', 'org:create', 'org', 'create', 'api', 400),
+  ('Read Organization', 'org:read', 'org', 'read', 'api', 401),
+  ('Update Organization', 'org:update', 'org', 'update', 'api', 402),
+  ('Read Audit Logs', 'audit:read', 'audit', 'read', 'api', 500),
+  ('Create Notification', 'notify:create', 'notify', 'create', 'api', 600),
+  ('Read Notification', 'notify:read', 'notify', 'read', 'api', 601),
+  ('Update Notification', 'notify:update', 'notify', 'update', 'api', 602),
+  ('Delete Notification', 'notify:delete', 'notify', 'delete', 'api', 603)
+ON CONFLICT (code) DO UPDATE SET
+  name = EXCLUDED.name,
+  resource = EXCLUDED.resource,
+  action = EXCLUDED.action,
+  type = EXCLUDED.type,
+  sort = EXCLUDED.sort;

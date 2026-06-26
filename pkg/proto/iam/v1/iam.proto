@@ -1,0 +1,239 @@
+syntax = "proto3";
+
+package iam.v1;
+
+option go_package = "github.com/ops-platform/pkg/proto/iam/v1;iamv1";
+
+import "google/protobuf/timestamp.proto";
+
+message Empty {}
+
+message Role {
+  string id = 1;
+  string org_id = 2;
+  string name = 3;
+  string code = 4;
+  string description = 5;
+  bool is_system = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message CreateRoleRequest {
+  string org_id = 1;
+  string name = 2;
+  string code = 3;
+  string description = 4;
+}
+
+message GetRoleRequest {
+  string id = 1;
+}
+
+message ListRolesRequest {
+  string org_id = 1;
+}
+
+message ListRolesResponse {
+  repeated Role roles = 1;
+}
+
+message UpdateRoleRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message DeleteRoleRequest {
+  string id = 1;
+}
+
+message Permission {
+  string id = 1;
+  string parent_id = 2;
+  string name = 3;
+  string code = 4;
+  string resource = 5;
+  string action = 6;
+  string type = 7;
+  int32 sort = 8;
+  repeated Permission children = 9;
+}
+
+message AssignPermissionsRequest {
+  string role_id = 1;
+  repeated string permission_ids = 2;
+}
+
+message PermissionTreeResponse {
+  repeated Permission permissions = 1;
+}
+
+message AssignUserRolesRequest {
+  string user_id = 1;
+  repeated string role_ids = 2;
+}
+
+message GetUserRolesRequest {
+  string user_id = 1;
+}
+
+message GetUserRolesResponse {
+  repeated Role roles = 1;
+}
+
+message GetUserPermissionsRequest {
+  string user_id = 1;
+}
+
+message GetUserPermissionsResponse {
+  repeated string codes = 1;
+}
+
+message PermissionCheck {
+  string method = 1;
+  string path = 2;
+}
+
+message PermissionCheckResult {
+  string method = 1;
+  string path = 2;
+  bool allowed = 3;
+  string reason = 4;
+  string required_permission = 5;
+}
+
+message CheckPermissionRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string method = 3;
+  string path = 4;
+}
+
+message CheckPermissionResponse {
+  bool allowed = 1;
+  string reason = 2;
+  repeated string roles = 3;
+}
+
+message BatchCheckPermissionRequest {
+  string user_id = 1;
+  string org_id = 2;
+  repeated PermissionCheck checks = 3;
+}
+
+message BatchCheckPermissionResponse {
+  repeated PermissionCheckResult results = 1;
+}
+
+message APIPermission {
+  string id = 1;
+  string method = 2;
+  string path_pattern = 3;
+  string permission_code = 4;
+  string description = 5;
+  bool enabled = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListAPIPermissionsRequest {}
+
+message ListAPIPermissionsResponse {
+  repeated APIPermission api_permissions = 1;
+}
+
+message CreateAPIPermissionRequest {
+  string method = 1;
+  string path_pattern = 2;
+  string permission_code = 3;
+  string description = 4;
+  bool enabled = 5;
+}
+
+message UpdateAPIPermissionRequest {
+  string id = 1;
+  string method = 2;
+  string path_pattern = 3;
+  string permission_code = 4;
+  string description = 5;
+  bool enabled = 6;
+}
+
+message DeleteAPIPermissionRequest {
+  string id = 1;
+}
+
+message Resource {
+  string id = 1;
+  string org_id = 2;
+  string resource_type = 3;
+  string resource_key = 4;
+  string name = 5;
+  string attributes = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message CreateResourceRequest {
+  string org_id = 1;
+  string resource_type = 2;
+  string resource_key = 3;
+  string name = 4;
+  string attributes = 5;
+}
+
+message Policy {
+  string id = 1;
+  string org_id = 2;
+  string name = 3;
+  string effect = 4;
+  string resource_type = 5;
+  string action = 6;
+  string condition = 7;
+  bool is_enabled = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message CreatePolicyRequest {
+  string org_id = 1;
+  string name = 2;
+  string effect = 3;
+  string resource_type = 4;
+  string action = 5;
+  string condition = 6;
+  bool is_enabled = 7;
+}
+
+message BindPolicyRequest {
+  string policy_id = 1;
+  string subject_type = 2;
+  string subject_id = 3;
+}
+
+service IAMService {
+  rpc CreateRole(CreateRoleRequest) returns (Role);
+  rpc GetRole(GetRoleRequest) returns (Role);
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse);
+  rpc UpdateRole(UpdateRoleRequest) returns (Role);
+  rpc DeleteRole(DeleteRoleRequest) returns (Empty);
+  rpc AssignPermissions(AssignPermissionsRequest) returns (Empty);
+  rpc GetPermissionTree(Empty) returns (PermissionTreeResponse);
+
+  rpc AssignUserRoles(AssignUserRolesRequest) returns (Empty);
+  rpc GetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse);
+  rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse);
+
+  rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse);
+  rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse);
+
+  rpc ListAPIPermissions(ListAPIPermissionsRequest) returns (ListAPIPermissionsResponse);
+  rpc CreateAPIPermission(CreateAPIPermissionRequest) returns (APIPermission);
+  rpc UpdateAPIPermission(UpdateAPIPermissionRequest) returns (APIPermission);
+  rpc DeleteAPIPermission(DeleteAPIPermissionRequest) returns (Empty);
+
+  rpc CreateResource(CreateResourceRequest) returns (Resource);
+  rpc CreatePolicy(CreatePolicyRequest) returns (Policy);
+  rpc BindPolicy(BindPolicyRequest) returns (Empty);
+}

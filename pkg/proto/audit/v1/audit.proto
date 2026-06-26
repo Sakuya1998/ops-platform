@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package audit.v1;
+
+option go_package = "github.com/ops-platform/pkg/proto/audit/v1;auditv1";
+
+import "google/protobuf/timestamp.proto";
+
+message Empty {}
+
+message AuditLog {
+  string id = 1;
+  string org_id = 2;
+  string user_id = 3;
+  string username = 4;
+  string event_type = 5;
+  string action = 6;
+  string resource_type = 7;
+  string resource_id = 8;
+  string detail = 9;
+  string ip = 10;
+  string user_agent = 11;
+  string session_id = 12;
+  string reason_code = 13;
+  string request_id = 14;
+  google.protobuf.Timestamp created_at = 15;
+}
+
+message ListAuditLogsRequest {
+  string org_id = 1;
+  string event_type = 2;
+  string start_time = 3;
+  string end_time = 4;
+  int32 page = 5;
+  int32 page_size = 6;
+}
+
+message ListAuditLogsResponse {
+  repeated AuditLog logs = 1;
+  int64 total = 2;
+}
+
+message ListEventTypesRequest {}
+
+message ListEventTypesResponse {
+  repeated string event_types = 1;
+}
+
+message RecordAuditEventRequest {
+  string org_id = 1;
+  string user_id = 2;
+  string username = 3;
+  string event_type = 4;
+  string action = 5;
+  string resource_type = 6;
+  string resource_id = 7;
+  string detail = 8;
+  string ip = 9;
+  string user_agent = 10;
+  string session_id = 11;
+  string reason_code = 12;
+  string request_id = 13;
+  google.protobuf.Timestamp occurred_at = 14;
+}
+
+message RecordAuditEventResponse {
+  string id = 1;
+}
+
+service AuditService {
+  rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse);
+  rpc ListEventTypes(ListEventTypesRequest) returns (ListEventTypesResponse);
+  rpc RecordAuditEvent(RecordAuditEventRequest) returns (RecordAuditEventResponse);
+}

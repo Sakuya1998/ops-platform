@@ -1,0 +1,46 @@
+apisix:
+  node_listen: 9080
+  enable_admin: false
+  enable_healthcheck: true
+
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+
+plugin_attr:
+  jwt-auth:
+    key_encipher_type: HS256
+
+plugins:
+  - jwt-auth
+  - limit-req
+  - limit-conn
+  - cors
+  - prometheus
+  - public-api
+  - request-id
+
+discovery: consul
+discovery.consul:
+  host:
+    - "http://consul:8500"
+  service:
+    reload_interval: 10
+
+nginx_config:
+  main_config: |
+    env APISIX_PROXY_CLIENT_MAX_BODY_SIZE;
+  http_config: |
+    lua_package_path = "/usr/local/apisix/?.lua;/usr/local/apisix/plugins/?.lua;;";
+    server_tokens off;
+    client_max_body_size 100m;
+    real_ip_header X-Forwarded-For;
+    set_real_ip_from 0.0.0.0/0;
+  error_log_level: warn
+  log:
+    access_log: /dev/stdout
+    error_log: /dev/stderr
+    access_log_format: '$remote_addr - $remote_user [$time_local] $request $status $body_bytes_sent $request_time $upstream_addr "$http_referer" "$http_user_agent" "$http_x_request_id"'
+  enable_access_log: true
+  enable_error_log: true

@@ -1,0 +1,34 @@
+version: "3.8"
+name: ops-platform-dev
+
+services:
+  auth-svc:
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../services/auth-svc:/app
+
+  iam-svc:
+    ports:
+      - "8081:8081"
+    volumes:
+      - ../services/iam-svc:/app
+
+  audit-svc:
+    ports:
+      - "8082:8082"
+    volumes:
+      - ../services/audit-svc:/app
+
+  notify-svc:
+    ports:
+      - "8083:8083"
+    volumes:
+      - ../services/notify-svc:/app
+
+  web:
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../web:/app
+    command: npm run dev
